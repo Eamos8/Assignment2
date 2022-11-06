@@ -8,19 +8,17 @@ const needle = require('needle');
 const nltk = require('../classifier/natural.js');
 
 async function fnAsync(data) {
+    await nltk.train();
     let response = await nltk.identify(data);
     //return response;
-    //if( response)    
+       
     console.log(response); // "Promise resolved"
     //Process result
     
   }
-//Replace sample text with tweet
+//Replace sample text with tweet comment out after it is placed in the 
 fnAsync('i hate this');  
 
-
-
-//DO NOT MERGE FROM HERE DOWN
 
 
 const token = 'AAAAAAAAAAAAAAAAAAAAAPEZYAEAAAAAfbbH%2FnxqP8iTOBREdlME2bV1dfQ%3D8ihqrVT7NIUsY9JY0ERG0wrQPZt3s2CLcsN5cQGe1rdaYIlCyM';
@@ -130,7 +128,8 @@ const stream = needle.get(streamURL, {
 stream.on('data', data => {
     try {
         const json = JSON.parse(data);
-        console.log(json);
+        console.log(json.data.text);
+
         //HERE IS WHERE ASYNCFUNC IS CALLED
         //filter data into text and image
         //last term will always be image
