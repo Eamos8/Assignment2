@@ -4,7 +4,7 @@
 const fs = require('fs');
 const natural = require('natural');
 const csv = require('fast-csv');
-const basePath = './server/classifier/';
+const basePath = './classifier';
 const classifier = new natural.BayesClassifier();
 const data = []
 function train(){

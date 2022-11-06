@@ -209,7 +209,10 @@ function streamConnect(retryAttempt, number, res, keywords) {
                 stream.destroy();
                 console.log('stop');
                 persistence(keywords, tweets);
-                res.render('index');
+                tweets.forEach(function (tweet) {
+                    analysedTweets.unshift(fnAsync(tweet.data.text));
+                })
+                console.log(analysedTweets);
             }
             //console.log(fnAsync(tweets.text));
             // A successful connection resets retry count.
@@ -239,6 +242,8 @@ function streamConnect(retryAttempt, number, res, keywords) {
     console.log('stream on');
     return stream;
 }
+
+
 
 //END RULES CODE
 
