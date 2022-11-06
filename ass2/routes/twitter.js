@@ -9,9 +9,7 @@ const redis = require('redis');
 
 //Natural classifier
 const nltk = require('../classifier/natural.js');
-//const redisClient = redis.createClient();
-//const bucketName = "eamontest";
-//const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
+
 
 
 async function fnAsync(data) {
@@ -101,9 +99,7 @@ async function persistence(query, data) {
     
         const objectParams = { Bucket: bucketName, Key: s3Key, Body: body };
         await s3.putObject(objectParams).promise();
-        console.log(`Successfully uploaded data to ${bucketName}/${s3Key}`);
-    
-        console.log(data);
+        console.log(`Successfully uploaded data to ${bucketName}/${s3Key}`);    
         } else {
           // Something else went wrong when accessing S3
           console.log('Something else went wrong when accessing S3');
