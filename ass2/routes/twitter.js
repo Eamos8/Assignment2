@@ -15,11 +15,13 @@ const nltk = require('../classifier/natural.js');
 
 
 async function fnAsync(data) {
+    await nltk.train();
     let response = await nltk.identify(data);
     //return response;
-    //if( response)    
+       
     console.log(response); // "Promise resolved"
     //Process result
+
 }
 //Replace sample text with tweet
 //fnAsync('what a great day');
@@ -187,6 +189,7 @@ async function setRules(ruleKeywords) {
     return (response.body);
 
 }
+
 
 function streamConnect(retryAttempt, number, res, keywords) {
     var tweets = [];
