@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  .page-header.text-center
+    h2 Enter your keywords, separated by comma
+  .row.text-center
+    form#main-form.form-horizontal(action='/twitter', method='get')
+      .col-md-8
+        input.form-control(type='text', name='keywords', id='keywords', placeholder='Cats', autofocus)
+      .col-md-2
+        select.form-control(name='number', id='number', data-toggle='tooltip' title='number')
+          option(value=20) 20
+          option(value=200) 200
+          option(value=1000) 1000
+          option(value=2000) 2000
+      .col-md-2
+        button.form-control.btn.btn-success.btn-block.submit-btn(type='submit')
+          i.fa.fa-magic
+          | Find tweets
+  br 
+  .row.text-center.loading-txt
+    i.fa.fa-circle-o-notch.fa-spin(style='font-size:24px')
+    h4 *Note, finding tweets will take some time...
