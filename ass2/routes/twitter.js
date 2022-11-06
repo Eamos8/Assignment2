@@ -9,17 +9,10 @@ const redis = require('redis');
 
 //Natural classifier
 const nltk = require('../classifier/natural.js');
-//const redisClient = redis.createClient();
-//const bucketName = "eamontest";
-//const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
-
 
 async function fnAsync(data) {
     let response = await nltk.identify(data);
-    //return response;
-    //if( response)    
     console.log(response); // "Promise resolved"
-    //Process result
 }
 //Replace sample text with tweet
 //fnAsync('what a great day');
@@ -58,13 +51,6 @@ const token = process.env.TOKEN;
 const rulesURL = 'https://api.twitter.com/2/tweets/search/stream/rules';
 const streamURL = 'https://api.twitter.com/2/tweets/search/stream';
 
-const twitter = new twit({
-    consumer_key: process.env.CONSUMER_KEY,
-    consumer_secret: process.env.CONSUMER_SECRET,
-    access_token: process.env.ACCESS_TOKEN,
-    access_token_secret: process.env.ACCESS_TOKEN_SECRET
-})
-
 async function persistence(query, data) {
     const redisKey = `tweets:${query}`;
     const s3Key = `tweets:${query}`;
@@ -100,8 +86,6 @@ async function persistence(query, data) {
         const objectParams = { Bucket: bucketName, Key: s3Key, Body: body };
         await s3.putObject(objectParams).promise();
         console.log(`Successfully uploaded data to ${bucketName}/${s3Key}`);
-    
-        console.log(data);
         } else {
           // Something else went wrong when accessing S3
           console.log('Something else went wrong when accessing S3');
@@ -210,9 +194,9 @@ function streamConnect(retryAttempt, number, res, keywords) {
                 stream.destroy();
                 console.log('stop');
                 persistence(keywords, tweets);
-                res.render('index');
+                console.log('pp');
+                location.assign("http://localhost:3001");
             }
-            //console.log(fnAsync(tweets.text));
             // A successful connection resets retry count.
             retryAttempt = 0;
         } catch (e) {
@@ -268,7 +252,6 @@ router.get('/', (req, res) => {
         streamConnect(0, req.query.number, res, req.query.keywords);
         
     })();
-    console.log('done');
 })
 
 module.exports = router;
